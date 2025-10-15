@@ -23,21 +23,10 @@ contract TrustVaultRegistryTest is Test {
 
         // Expect event emission (check topics but not dynamic data like timestamp/URI)
         vm.expectEmit(true, true, true, false, address(registry));
-        emit TrustVaultRegistry.ProofRegistered(
-            0,
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            creator,
-            0,
-            ""
-        ); // Timestamp/URI not checked
+        emit TrustVaultRegistry.ProofRegistered(0, SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, creator, 0, ""); // Timestamp/URI not checked
 
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         // Derive ID post-registration
         uint256 id = registry.proofCount() - 1;
@@ -53,35 +42,23 @@ contract TrustVaultRegistryTest is Test {
         assertEq(proof.vectorHash, SAMPLE_VECTOR_HASH);
         assertEq(proof.creator, creator);
         assertEq(proof.timestamp, 1234567890);
-        assertEq(
-            keccak256(bytes(proof.metadataURI)),
-            keccak256(bytes(SAMPLE_URI))
-        );
+        assertEq(keccak256(bytes(proof.metadataURI)), keccak256(bytes(SAMPLE_URI)));
     }
 
     function test_VerifyHashAfterRegistration() public {
         vm.warp(1234567890);
 
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
-        (
-            bool exists,
-            address retrievedCreator,
-            uint256 retrievedTimestamp
-        ) = registry.verifyHash(SAMPLE_CONTENT_HASH);
+        (bool exists, address retrievedCreator, uint256 retrievedTimestamp) = registry.verifyHash(SAMPLE_CONTENT_HASH);
         assertTrue(exists);
         assertEq(retrievedCreator, creator);
         assertEq(retrievedTimestamp, 1234567890);
     }
 
     function test_VerifyHashNonExistent() public view {
-        (bool exists, address creator_, uint256 timestamp) = registry
-            .verifyHash(SAMPLE_CONTENT_HASH);
+        (bool exists, address creator_, uint256 timestamp) = registry.verifyHash(SAMPLE_CONTENT_HASH);
         assertFalse(exists);
         assertEq(creator_, address(0));
         assertEq(timestamp, 0);
@@ -91,11 +68,7 @@ contract TrustVaultRegistryTest is Test {
         vm.warp(1234567890);
 
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         TrustVaultRegistry.Proof memory proof = registry.getProofById(0);
         assertEq(proof.contentHash, SAMPLE_CONTENT_HASH);
@@ -110,19 +83,11 @@ contract TrustVaultRegistryTest is Test {
 
     function test_PreventDuplicateRegistration() public {
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         vm.prank(creator);
         vm.expectRevert("Proof already registered");
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
     }
 
     function test_PreventZeroContentHash() public {
@@ -141,11 +106,7 @@ contract TrustVaultRegistryTest is Test {
         assertEq(registry.proofCount(), 0);
 
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         assertEq(registry.proofCount(), 1);
 
@@ -159,25 +120,19 @@ contract TrustVaultRegistryTest is Test {
 
     function test_MultipleUsers() public {
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         bytes32 otherHash = keccak256("other content");
         vm.prank(otherUser);
         registry.registerProof(otherHash, SAMPLE_VECTOR_HASH, SAMPLE_URI);
 
         // Verify first
-        (bool exists1, address creator1, ) = registry.verifyHash(
-            SAMPLE_CONTENT_HASH
-        );
+        (bool exists1, address creator1,) = registry.verifyHash(SAMPLE_CONTENT_HASH);
         assertTrue(exists1);
         assertEq(creator1, creator);
 
         // Verify second
-        (bool exists2, address creator2, ) = registry.verifyHash(otherHash);
+        (bool exists2, address creator2,) = registry.verifyHash(otherHash);
         assertTrue(exists2);
         assertEq(creator2, otherUser);
     }
@@ -187,21 +142,10 @@ contract TrustVaultRegistryTest is Test {
 
         // Expect event (topics checked, data not due to dynamics)
         vm.expectEmit(true, true, true, false, address(registry));
-        emit TrustVaultRegistry.ProofRegistered(
-            0,
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            creator,
-            0,
-            ""
-        ); // Placeholders for unchecked
+        emit TrustVaultRegistry.ProofRegistered(0, SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, creator, 0, ""); // Placeholders for unchecked
 
         vm.prank(creator);
-        registry.registerProof(
-            SAMPLE_CONTENT_HASH,
-            SAMPLE_VECTOR_HASH,
-            SAMPLE_URI
-        );
+        registry.registerProof(SAMPLE_CONTENT_HASH, SAMPLE_VECTOR_HASH, SAMPLE_URI);
     }
 
     function test_OwnershipTransfer() public {
