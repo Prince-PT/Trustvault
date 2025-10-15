@@ -10,15 +10,22 @@ contract TrustVaultRegistry is Ownable {
         address creator;
         uint256 timestamp;
         string metadataURI;
-        // bool exists;
     }
+    // bool exists;
 
-    mapping (bytes32 => Proof) public proofs;
+    mapping(bytes32 => Proof) public proofs;
 
-    mapping (uint256 => bytes32) public idToHash; // For easy Id Lookup
+    mapping(uint256 => bytes32) public idToHash; // For easy Id Lookup
     uint256 public proofCount;
 
-    event ProofRegistered(uint256 indexed id, bytes32 indexed contentHash, bytes32 vectorHash, address indexed creator, uint256 timestamp, string metadataURI);
+    event ProofRegistered(
+        uint256 indexed id,
+        bytes32 indexed contentHash,
+        bytes32 vectorHash,
+        address indexed creator,
+        uint256 timestamp,
+        string metadataURI
+    );
 
     constructor() Ownable(msg.sender) {}
 
