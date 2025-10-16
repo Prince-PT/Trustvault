@@ -125,18 +125,6 @@ In short, TrustVault combines on-chain verifiability, off-chain efficiency, and 
 
 ---
 
-## 🧑‍🤝‍🧑 Team & Roles
-
-- **Prince Thakkar** – Full-Stack & Smart Contract Developer  
-  *Built CampusCommute, Institute Logger, and multiple Web3 projects using Next.js, Solidity, and Foundry.*
-
-Looking for:
-- A **Smart Contract Engineer** for protocol optimizations  
-- A **UI/UX Designer** for improved user flows  
-- A **ZK/Infra Dev** for privacy module integration
-
----
-
 ## 🏁 Vision
 
 > In the digital era, “ownership” should not depend on trust — it should be **provable**.
