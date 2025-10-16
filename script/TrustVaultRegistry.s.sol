@@ -7,7 +7,7 @@ import {TrustVaultRegistry} from "../src/TrustVaultRegistry.sol";
 contract DeploySepolia is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
-        
+
         vm.startBroadcast(deployerPrivateKey);
 
         console2.log("Deploying TrustVaultRegistry to Sepolia...");
