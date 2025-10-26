@@ -68,12 +68,10 @@ Optionally, creators can **selectively prove ownership** using **zero-knowledge 
 
 | Layer | Technology |
 |-------|-------------|
-| **Frontend** | Next.js, React, TailwindCSS, Wagmi, Ethers.js |
-| **Smart Contracts** | Solidity, Foundry / Hardhat |
-| **Storage** | IPFS (optional for metadata), Filecoin (future), Local hashing |
-| **Blockchain** | Ethereum / Base / Linea (depending on track) |
-| **Optional ZK Layer** | Noir / ZK-Kit (for selective disclosure proofs) |
-| **Deployment** | Vercel (frontend), Alchemy / Infura (RPC) |
+| **Frontend** |React, TailwindCSS, Wagmi, Ethers.js |
+| **Smart Contracts** | Solidity, Foundry |
+| **Blockchain** | Ethereum |
+| **Deployment** | Lovable (frontend), Alchemy / Infura (RPC) |
 
 ---
 
@@ -81,13 +79,11 @@ Optionally, creators can **selectively prove ownership** using **zero-knowledge 
 
 TrustVault is built on a modular Web3 stack with five key layers working together to enable secure, private, and verifiable proof-of-authenticity.
 1. Frontend (Next.js)
-Built with Next.js, React, and Wagmi, the frontend handles wallet connection, local file hashing (SHA-256), metadata generation, and interaction with smart contracts. No file ever leaves the client — ensuring privacy and trustless operation.
+Built with React, and Wagmi, the frontend handles wallet connection, local file hashing (SHA-256), metadata generation, and interaction with smart contracts. No file ever leaves the client — ensuring privacy and trustless operation.
 2. Smart Contract Layer
 Written in Solidity, the contract stores the file hash, metadata, and timestamp mapped to the user’s wallet. It emits verification events and allows public proof validation or ownership transfer. This layer ensures immutability and authenticity.
 3. Blockchain Layer
-Deployed on Ethereum L2 networks (Base, Linea, Arbitrum), it maintains an immutable, decentralized record of proofs and timestamps — ensuring transparent and permanent verification.
-4. Off-chain Storage (Optional)
-Uses IPFS or Filecoin for storing metadata or thumbnails linked to on-chain records. This keeps storage costs low while maintaining decentralization and data integrity.
+Deployed on Ethereum, it maintains an immutable, decentralized record of proofs and timestamps — ensuring transparent and permanent verification.
 5. Verification & Privacy Layer
 Supports hash-based authenticity checks and optional ZK-proof verification — allowing users to prove file ownership without revealing content.
 
@@ -96,7 +92,6 @@ Supports hash-based authenticity checks and optional ZK-proof verification — a
 # Data Flow
 User uploads → file hashed locally.
 Hash + metadata → stored on-chain.
-Metadata → optional IPFS link.
 Anyone can verify by re-uploading or via ZK proof.
 In short, TrustVault combines on-chain verifiability, off-chain efficiency, and optional ZK privacy to create a secure proof-of-ownership infrastructure for creators and organizations.
 
